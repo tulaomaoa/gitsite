@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+    <script src="{% static "myapp/js/jquery3.js" %}"></script>
+    <link rel="stylesheet" href="{% static "myapp/css/main.css" %}">
+</head>
+<body>
+{#   <span class="like">我所喜欢的水果</span>#}
+{#   <span><input type="button" id="fruit" value="提交"></span>#}
+{#    <p id="content"></p>#}
+{#   <script>#}
+{#       $('#fruit').click(function(){#}
+{#          $('#content').load("{% url 'myapp:fruit' %}")#}
+{#       })#}
+{#   </script>#}
+<form action="">
+
+    a:<input type="text" id="name" name="a"><br>
+    b:<input type="text" id="mima" name="b"><br>
+    <input type="button" value="提交" id="btn">
+</form>
+<p id="result"></p>
+
+<script>
+    {#$('#btn').click(function(){#}
+    {#   var a =$('#name').val()#}
+    {#   var b =$('#mima').val()#}
+    {#    $.get("{% url  'myapp:add' %}",#}
+    {#        {'a':a,'b':b},#}
+    {#    function(ret){#}
+    {#        $("#result").html(ret.ret)#}
+    {#    }        )#}
+    $.ajaxSetup({
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+    $('#btn').click(function(){
+        var a =$('#name').val()
+        var b =$('#mima').val()
+        {#$.post(" {% url "myapp:add" %}",#}
+        {#    {"a":a,"b":b},#}
+        {#    function(ret){#}
+        {#    $("#result").html(ret.ret)#}
+       $.ajax({type:'post',url:"{% url 'myapp:add' %}",data:{"a":a,"b":b},success:function(ret){
+             $("#result").html(ret.ret)
+       }
+       })
+
+
+    })
+
+</script>
+</body>
+</html>
